@@ -1,14 +1,11 @@
 package com.example.ReflectionJournal.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,16 +14,20 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "USER_TBL")
+@Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue()
+    @GeneratedValue
     private int id;
-    @NonNull
+    @NotBlank(message = "Email is mandatory")
     private String userName;
-    @NonNull
+    @NotBlank(message = "Email is mandatory")
+//    @Size(min = 6, message = "Password must be at least 6 characters long")
     private String password;
-    @DBRef
+    @NotBlank(message = "Email is mandatory")
+    @Email(message = "Please Provide a valid email address")
+    private String email;
+    private String role;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<JournalEntry> journalEntries = new ArrayList<>();
-    private List<String>roles;
 }

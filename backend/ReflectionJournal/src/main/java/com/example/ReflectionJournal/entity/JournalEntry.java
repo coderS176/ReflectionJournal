@@ -1,13 +1,11 @@
 package com.example.ReflectionJournal.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 import java.time.LocalDateTime;
 
@@ -15,13 +13,18 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "JOURNAL_ENTRY")
+@Table(name = "journal_entries")
 public class JournalEntry {
     @Id
     @GeneratedValue
     private int id;
-    @NonNull
+    @NotBlank(message = "Title can't be Empty")
     private String title;
     private String content;
-    public LocalDateTime dateTime;
+    private LocalDateTime dateTime;
+
+    @ManyToOne // Define Many-to-One relationship
+    @JsonBackReference // This side will be ignored during serialization
+    @JoinColumn(name = "user_id", nullable = false) // Foreign key reference to User
+    private User user;
 }
