@@ -67,7 +67,7 @@ public class JournalEntryService {
     }
 
     public Optional<JournalEntry> getById(int id) {
-        bCryptPasswordEncoder.hashCode()
+        bCryptPasswordEncoder.hashCode();
         return journalRepository.findById(id);
     }
 }

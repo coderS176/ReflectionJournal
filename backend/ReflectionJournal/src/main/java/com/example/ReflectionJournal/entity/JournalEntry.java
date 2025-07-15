@@ -22,6 +22,7 @@ public class JournalEntry {
     private String title;
     private String content;
     private LocalDateTime dateTime;
+    private String imageUrl; // URL/path to the uploaded image
 
     @ManyToOne // Define Many-to-One relationship
     @JsonBackReference // This side will be ignored during serialization
